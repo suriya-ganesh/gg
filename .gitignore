@@ -3,3 +3,4 @@ maelstrom
 store
 .DS_Store
 */bin/
+*/vendor/

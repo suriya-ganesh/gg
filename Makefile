@@ -16,13 +16,28 @@ test_echo:
 	./maelstrom/maelstrom test -w echo --bin 01_echo/$(OUTPUT_BIN_DIR) --node-count 1 --time-limit 10
 
 
-# Running unique id tests;q
+# Running unique id tests
 unique:
 	$(call build_go_app,02_unique)
 
 test_unique:
 	./maelstrom/maelstrom test -w unique-ids --bin 02_unique/$(OUTPUT_BIN_DIR) --time-limit 30 --rate 1000 --node-count 3 --availability total --nemesis partition
 
+
+
+# Running broadcast
+broadcast_3a:
+	$(call build_go_app,3a_single_broadcast)
+
+
+test_broadcast:
+	./maelstrom/maelstrom test -w broadcast --bin 3a_single_broadcast/$(OUTPUT_BIN_DIR) --node-count 1 --time-limit 20 --rate 10
+
+
+
 # Clear all output directories
 clear-all:
 	find . -type d -name 'bin' -print0 | xargs -0 rm -rf:wq
+
+serve:
+	./maelstrom/maelstrom serve
