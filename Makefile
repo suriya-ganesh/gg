@@ -16,7 +16,7 @@ test_echo:
 	./maelstrom/maelstrom test -w echo --bin 01_echo/$(OUTPUT_BIN_DIR) --node-count 1 --time-limit 10
 
 
-# Running unique id tests
+# Running unique id tests;q
 unique:
 	$(call build_go_app,02_unique)
 
