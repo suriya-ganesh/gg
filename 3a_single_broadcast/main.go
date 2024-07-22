@@ -20,9 +20,6 @@ func (s *server) broadcast(msg maelstrom.Message) error {
 		return err
 	}
 
-	//Lock and unlock
-	s.Lock()
-	defer s.Unlock()
 	s.msgs = append(s.msgs, body["message"])
 
 	return s.n.Reply(msg, map[string]any{
@@ -38,19 +35,9 @@ func (s *server) read(msg maelstrom.Message) error {
 		return err
 	}
 
-	s.Lock()
-	defer s.Unlock()
-
-	//Need to make and then assign so that we don't lose messages. Easiest way to copy stuff between lists in golang
-
-	m := make([]any, len(s.msgs))
-	for i := 0; i < len(s.msgs); i++ {
-		m[i] = s.msgs[i]
-	}
-
 	return s.n.Reply(msg, map[string]any{
 		"type":     "read_ok",
-		"messages": m,
+		"messages": s.msgs,
 	})
 }
 

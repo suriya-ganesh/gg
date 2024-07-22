@@ -30,7 +30,7 @@ broadcast_3a:
 	$(call build_go_app,3a_single_broadcast)
 
 
-test_broadcast:
+test_broadcast_3a:
 	./maelstrom/maelstrom test -w broadcast --bin 3a_single_broadcast/$(OUTPUT_BIN_DIR) --node-count 1 --time-limit 20 --rate 10
 
 
@@ -48,6 +48,12 @@ broadcast_3c:
 test_broadcast_3c:
 	./maelstrom/maelstrom test -w broadcast --bin 3c_networkp_broadcast/$(OUTPUT_BIN_DIR) --node-count 5 --time-limit 20 --rate 10 --nemesis partition
 
+
+broadcast_3d:
+	$(call build_go_app,3d_efficient_broadcast)
+
+test_broadcast_3d:
+	./maelstrom/maelstrom test -w broadcast --bin 3d_efficient_broadcast/$(OUTPUT_BIN_DIR) --node-count 25 --time-limit 20 --rate 10 --nemesis partition
 
 
 # Clear all output directories
