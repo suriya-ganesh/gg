@@ -15,6 +15,16 @@ type server struct {
 	msgs []any
 }
 
+func (s *server) writeMessage(m map[string]any) {
+
+	//Lock, write and unlock messages
+	//Locking elsewhere would choke the system, resulting in lost messages
+
+	s.Lock()
+	defer s.Unlock()
+	s.msgs = append(s.msgs, m["message"])
+}
+
 func (s *server) broadcast(msg maelstrom.Message) error {
 	var body map[string]any
 
@@ -22,12 +32,10 @@ func (s *server) broadcast(msg maelstrom.Message) error {
 		return err
 	}
 
-	//Lock and unlock
-	s.Lock()
-	defer s.Unlock()
-	s.msgs = append(s.msgs, body["message"])
+	s.writeMessage(body) //Write message to messages list
 
 	for _, dst := range s.n.NodeIDs() {
+
 		if dst == msg.Src || dst == s.n.ID() { //skip if destination is source or current node
 			continue
 		}
@@ -113,7 +121,8 @@ func newBroadcastWorkers(n *maelstrom.Node, worker int) *broadcastWorkers {
 	ch := make(chan broadcastMsg) // Channel to be used by workers to receive messages.
 	ctx, cancel := context.WithCancel(context.Background())
 
-	for i := 0; i < worker; i++ { //Start worker
+	for i := 0; i < worker; i++ { //Start workers
+
 		go func() { // create a goroutine per worker
 			for {
 				select {
@@ -129,6 +138,7 @@ func newBroadcastWorkers(n *maelstrom.Node, worker int) *broadcastWorkers {
 				}
 			}
 		}()
+
 	}
 
 	return &broadcastWorkers{

@@ -46,7 +46,7 @@ broadcast_3c:
 	$(call build_go_app,3c_networkp_broadcast)
 
 test_broadcast_3c:
-	./maelstrom/maelstrom test -w broadcast --bin 3c_networkp_broadcast/$(OUTPUT_BIN_DIR) --node-count 5 --time-limit 20 --rate 10
+	./maelstrom/maelstrom test -w broadcast --bin 3c_networkp_broadcast/$(OUTPUT_BIN_DIR) --node-count 5 --time-limit 20 --rate 10 --nemesis partition
 
 
 
