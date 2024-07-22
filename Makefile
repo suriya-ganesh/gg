@@ -35,6 +35,12 @@ test_broadcast:
 
 
 
+broadcast_3b:
+	$(call build_go_app,3b_multi_node_broadcast)
+
+test_broadcast_3b:
+	./maelstrom/maelstrom test -w broadcast --bin 3b_multi_node_broadcast/$(OUTPUT_BIN_DIR) --node-count 5 --time-limit 20 --rate 10
+
 # Clear all output directories
 clear-all:
 	find . -type d -name 'bin' -print0 | xargs -0 rm -rf:wq

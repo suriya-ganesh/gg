@@ -60,7 +60,7 @@ func (s *server) topology(msg maelstrom.Message) error {
 	if err := json.Unmarshal(msg.Body, &body); err != nil {
 		return err
 	}
-	delete(body, "topology") //Delete key because it is not required
+	delete(body, "topology") //Delete key because it is not required (for this exercise)
 	body["type"] = "topology_ok"
 
 	return s.n.Reply(msg, body)

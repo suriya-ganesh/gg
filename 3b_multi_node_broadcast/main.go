@@ -25,6 +25,19 @@ func (s *server) broadcast(msg maelstrom.Message) error {
 	defer s.Unlock()
 	s.msgs = append(s.msgs, body["message"])
 
+	for _, dst := range s.n.NodeIDs() {
+		if dst == msg.Src || dst == s.n.ID() { //skip if destination is source or current node
+			continue
+		}
+
+		dst := dst
+		go func() {
+			if err := s.n.Send(dst, body); err != nil { //Send message using Send() call
+				panic(err)
+			}
+		}()
+	}
+
 	return s.n.Reply(msg, map[string]any{
 		"type": "broadcast_ok",
 	})
