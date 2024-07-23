@@ -15,7 +15,6 @@ echo:
 test_echo:
 	./maelstrom/maelstrom test -w echo --bin 01_echo/$(OUTPUT_BIN_DIR) --node-count 1 --time-limit 10
 
-
 # Running unique id tests
 unique:
 	$(call build_go_app,02_unique)
@@ -26,34 +25,34 @@ test_unique:
 
 
 # Running broadcast
-broadcast_3a:
+3a:
 	$(call build_go_app,3a_single_broadcast)
 
 
-test_broadcast_3a:
+test_3a: 3a
 	./maelstrom/maelstrom test -w broadcast --bin 3a_single_broadcast/$(OUTPUT_BIN_DIR) --node-count 1 --time-limit 20 --rate 10
 
 
 
-broadcast_3b:
+3b:
 	$(call build_go_app,3b_multi_node_broadcast)
 
-test_broadcast_3b:
+test_3b: 3b
 	./maelstrom/maelstrom test -w broadcast --bin 3b_multi_node_broadcast/$(OUTPUT_BIN_DIR) --node-count 5 --time-limit 20 --rate 10
 
 
-broadcast_3c:
+3c:
 	$(call build_go_app,3c_networkp_broadcast)
 
-test_broadcast_3c:
+test_3c: 3c
 	./maelstrom/maelstrom test -w broadcast --bin 3c_networkp_broadcast/$(OUTPUT_BIN_DIR) --node-count 5 --time-limit 20 --rate 10 --nemesis partition
 
 
-broadcast_3d:
+3d:
 	$(call build_go_app,3d_efficient_broadcast)
 
-test_broadcast_3d:
-	./maelstrom/maelstrom test -w broadcast --bin 3d_efficient_broadcast/$(OUTPUT_BIN_DIR) --node-count 25 --time-limit 20 --rate 10 --nemesis partition
+test_3d: 3d
+	./maelstrom/maelstrom test -w broadcast --bin 3d_efficient_broadcast/$(OUTPUT_BIN_DIR) --node-count 250 --time-limit 20 --rate 10 --nemesis partition
 
 
 # Clear all output directories
