@@ -52,7 +52,19 @@ test_3c: 3c
 	$(call build_go_app,3d_efficient_broadcast)
 
 test_3d: 3d
-	./maelstrom/maelstrom test -w broadcast --bin 3d_efficient_broadcast/$(OUTPUT_BIN_DIR) --node-count 250 --time-limit 20 --rate 10 --nemesis partition
+	./maelstrom/maelstrom test -w broadcast --bin 3d_efficient_broadcast/$(OUTPUT_BIN_DIR) --node-count 25 --time-limit 20 --rate 10 --latency 100
+
+3e:
+	$(call build_go_app,3e_efficient_broadcast)
+
+test_3e: 3e
+	./maelstrom/maelstrom test -w broadcast --bin 3e_efficient_broadcast/$(OUTPUT_BIN_DIR) --node-count 25 --time-limit 20 --rate 10 --latency 100
+
+4:
+	$(call build_go_app,4_counter)
+
+test_4:
+	./maelstrom/maelstrom test -w g-counter --bin 4_counter/$(OUTPUT_BIN_DIR) --node-count 3 --rate 100 --time-limit 20 --nemesis partition
 
 
 # Clear all output directories

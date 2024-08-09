@@ -111,7 +111,7 @@ func (s *server) read(msg maelstrom.Message) error {
 
 	s.RLock()
 
-	//Need to make and then assign so that we don't lose messages. Easiest way to copy stuff between lists in golang. Gah!!
+	//Need to make and then assign so that we don't lose messages. Easiest way to copy stuff between lists in golang
 	m := make([]int, 0) // Create a slice with 0 length
 	for message := range s.msgs {
 		m = append(m, message)
